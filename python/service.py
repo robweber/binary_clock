@@ -92,15 +92,15 @@ def alarm(t, c):
 def getTime():
     global settings
     now = datetime.datetime.now()
-    return json.dumps({'alarm_time':settings.getValue('alarm_time'), 'current_time': '%d:%d' % (now.hour, now.minute) })
+    return json.dumps({'alarm_time':settings.getValue('alarm_time'), 'military_time': settings.getValue('military_time'), 'current_time': '%d:%d' % (now.hour, now.minute) })
 
 @webiopi.macro
-def saveAlarm(alarm_time):
+def saveValue(setting_key, setting_value):
     global settings
 
-    settings.setValue('alarm_time', alarm_time)
+    settings.setValue(setting_key, setting_value)
 
-    return json.dumps({'message':'Alarm time saved'})
+    return json.dumps({'message':'Saved!'})
 
 # SETUP - called when webiopi sets up
 def setup():
@@ -150,7 +150,13 @@ def loop():
         day_colour = constants.blue
 
     draw_time_string(day, 4, 0, 1, day_colour)
-    draw_time_string(now.hour, 6, 0, 2, constants.red)
+
+    # if not using military time and after 12pm, subtract 12 from hour
+    current_hour = now.hour
+    if(settings.getValue('military_time') == 'false' and current_hour > 12):
+        current_hour = current_hour - 12
+
+    draw_time_string(current_hour, 6, 0, 2, constants.red)
     draw_time_string(now.minute, 6, 0, 3, constants.yellow)
     draw_time_string(now.second, 6, 0, 4, constants.green)
 

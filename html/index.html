@@ -46,7 +46,7 @@
    function runSaveAction(){
      alarm_time = $('#alarm_time_input').val();
 
-     webiopi().callMacro('saveAlarm', alarm_time, showNotification);
+     webiopi().callMacro('saveValue', ['alarm_time', alarm_time], showNotification);
    }
 
   </script>  
