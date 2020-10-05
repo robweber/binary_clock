@@ -8,3 +8,6 @@ lightblue = (100, 200, 255)
 magenta = (255, 0, 255)
 white = (255, 255, 255)
 
+# settings names
+ALARM_TIME = 'alarm_time'
+MILITARY_TIME = 'military_time'

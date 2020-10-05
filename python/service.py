@@ -61,7 +61,7 @@ def alarm(t, c):
     global settings
     global alarm_flash_time
 
-    alarm_time = settings.getValue('alarm_time')
+    alarm_time = settings.getValue(constants.ALARM_TIME)
 
     # by default we will assume the alarm will not be triggered so keep the default states of the brightn$
     unicornhat.brightness(0.5)
@@ -92,7 +92,7 @@ def alarm(t, c):
 def getTime():
     global settings
     now = datetime.datetime.now()
-    return json.dumps({'alarm_time':settings.getValue('alarm_time'), 'military_time': settings.getValue('military_time'), 'current_time': '%d:%d' % (now.hour, now.minute) })
+    return json.dumps({'alarm_time':settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': '%d:%d' % (now.hour, now.minute) })
 
 @webiopi.macro
 def saveValue(setting_key, setting_value):
@@ -111,7 +111,7 @@ def setup():
     settings = Settings('/home/pi/binary_clock/')
 
     webiopi.info('setup')
-    webiopi.info('Alarm set for %s' % settings.getValue('alarm_time'))
+    webiopi.info('Alarm set for %s' % settings.getValue(constants.ALARM_TIME))
 
     unicornhat.set_layout(unicornhat.AUTO)
     unicornhat.rotation(180)
@@ -153,7 +153,7 @@ def loop():
 
     # if not using military time and after 12pm, subtract 12 from hour
     current_hour = now.hour
-    if(settings.getValue('military_time') == 'false' and current_hour > 12):
+    if(settings.getValue(constants.MILITARY_TIME) == 'false' and current_hour > 12):
         current_hour = current_hour - 12
 
     draw_time_string(current_hour, 6, 0, 2, constants.red)
