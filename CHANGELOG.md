@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## 10/5/2020
+## v0.0.3
 
 ### Added
 
@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - use orange/red for AM/PM (if using 12 hr clock) and white for alarm color
 - don't adjust brightness for alarm, it's bright enough
 
-## 10/4/2020
+## v.0.0.2
 
 ### Added
 
@@ -25,7 +25,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - changed the macro to allow generically setting any value in the settings file, not just the alarm time
 
-## 10/3/2020
+## v0.0.1
 
 ### Added
 
