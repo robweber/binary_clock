@@ -89,7 +89,13 @@ def alarm(t, c):
 def getTime():
     global settings
     now = datetime.datetime.now()
-    return json.dumps({'alarm_time':settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': '%d:%d' % (now.hour, now.minute) })
+
+    time_string = now.strftime('%H:%M')
+    if(settings.getValue(constants.MILITARY_TIME) == 'false'):
+        #if using 12 hour clock, convert
+        time_string = now.strftime('%I:%M %p')
+
+    return json.dumps({'alarm_time':settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': time_string })
 
 @webiopi.macro
 def getSettings():
