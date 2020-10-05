@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Binary Clock</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.4.3.1.min.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/boostrap.4.3.1.bundle.min.js"></script>
+  <script src="js/custom.js"></script>
+  
+  <!-- webiopi -->
+  <script type="text/javascript" src="/webiopi.js"></script>
+  <script type="text/javascript">
+
+   webiopi().ready(function(){
+     //when loaded get the current time and alarm settings
+     webiopi().callMacro('getTime',[],updateTime);
+   });
+
+   function updateTime(macro, args, response){
+     //parse the response and set the values for display
+     json = jQuery.parseJSON(response);
+
+     $('#current_time').html(json['current_time']);
+     $('#alarm_time').html(json['alarm_time']);
+
+     //only set alarm time if it's blank
+     if($('#alarm_time_input').val() == '')
+     {
+       $('#alarm_time_input').val(json['alarm_time']);
+     }
+
+     setTimeout(function(){webiopi().callMacro('getTime', [], updateTime),5000});
+   }
+
+   function runSaveAction(){
+     alarm_time = $('#alarm_time_input').val();
+
+     webiopi().callMacro('saveAlarm', alarm_time, showNotification);
+   }
+
+  </script>  
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Binary Clock</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main role="main">
+    <p id="alert_area" class="alert alert-success text-center" style="display:none"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-right">
+          <h5 class="mt-5">Current Date/Time Is: <span class="" id="current_time"></span><br>
+          Alarm Time: <span class="" id="alarm_time"></span>
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <h3>Reading the Clock</h3>
+          <p>Binary digits are read right to left, with each digit doubling from the next in powers of 2. This results in the following values:</p>
+          <h4 class="text-center"><span class="mr-3">128</span> <span class="mr-3">64</span> <span class="mr-3">32</span> <span class="mr-3">16</span> <span class="mr-3">8</span> <span class="mr-3">4</span> <span class="mr-3">2</span> 1</h4>
+          <p>When lights are on that value is added to the total to come up with the decimal number. Each row in the clock designates a different time value.</p>
+          <table class="table">
+            <tr>
+              <td>Row 1</td>
+              <td>Month in Pink</td>
+            </tr>
+            <tr>
+              <td>Row 2</td>
+              <td>Day of the Month in Blue</td>
+            </tr>
+            <tr>
+              <td>Row 3</td>
+              <td>Hour of the day (1-24) in Red</td>
+            </tr>
+            <tr>
+              <td>Row 4</td>
+              <td>Minute of the hour in Yellow</td>
+            </tr>
+            <tr>
+              <td>Row 5</td>
+              <td>Seconds of the miute in Green</td>
+            </tr>
+            <tr>
+              <td>Rows 6-8</td>
+              <td>Flashes in orange when the alarm is triggered</td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12"><h3>Set Alarm</h3></div>
+      </div>
+      <div class="row">
+        <div class="col-md-6"><input type="text" class="form-control" id="alarm_time_input" /></div>
+        <div class="col-md-6"><input type="button" class="btn btn-primary" id="save_button" onClick="runSaveAction()" value="Save" /></div>
+      </div>
+    </div>       
+  </main>
+</body>
+
+</html>
