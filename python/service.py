@@ -128,7 +128,7 @@ def loop():
     now = datetime.datetime.now()
 
     # draw each time string in their specific locations
-    draw_time_string(now.month, 4, 0, 0, constants.magenta)
+    draw_time_string(now.month, 4, 0, 0, constants.MAGENTA)
 
     # Day field is 4 bits (lights) long, and as we don't use 0-indexed
     # days of the month, that means we can only represent 1-15 (0b1 - 0b1111)
@@ -143,11 +143,11 @@ def loop():
         day = now.day & 0b1111
 
         # Encode the missing bit as colour
-        day_colour = constants.green
+        day_colour = constants.GREEN
     else:
         # Day is 15 or less so the bit representing 16 is not set and the number can be displayed$
         day = now.day
-        day_colour = constants.blue
+        day_colour = constants.BLUE
 
     draw_time_string(day, 4, 0, 1, day_colour)
 
@@ -156,12 +156,12 @@ def loop():
     if(settings.getValue(constants.MILITARY_TIME) == 'false' and current_hour > 12):
         current_hour = current_hour - 12
 
-    draw_time_string(current_hour, 6, 0, 2, constants.red)
-    draw_time_string(now.minute, 6, 0, 3, constants.yellow)
-    draw_time_string(now.second, 6, 0, 4, constants.green)
+    draw_time_string(current_hour, 6, 0, 2, constants.RED)
+    draw_time_string(now.minute, 6, 0, 3, constants.YELLOW)
+    draw_time_string(now.second, 6, 0, 4, constants.GREEN)
 
     # check if the alarm needs to be signalled or not
-    alarm(now, constants.orange)
+    alarm(now, constants.ORANGE)
 
     # we've now set all the LEDs, time to show the world our glory!
     unicornhat.show()

@@ -1,12 +1,12 @@
 # colour tuples
-red = (255, 0, 0)
-orange = (255, 127, 0)
-yellow = (255, 255, 0)
-green = (0, 255, 0)
-blue = (0, 127, 255)
-lightblue = (100, 200, 255)
-magenta = (255, 0, 255)
-white = (255, 255, 255)
+RED = (255, 0, 0)
+ORANGE = (255, 127, 0)
+YELLOW = (255, 255, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 127, 255)
+LIGHT_BLUE = (100, 200, 255)
+MAGENTA = (255, 0, 255)
+WHITE = (255, 255, 255)
 
 # settings names
 ALARM_TIME = 'alarm_time'
