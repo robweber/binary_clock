@@ -63,8 +63,7 @@ def alarm(t, c):
 
     alarm_time = settings.getValue(constants.ALARM_TIME)
 
-    # by default we will assume the alarm will not be triggered so keep the default states of the brightn$
-    unicornhat.brightness(0.5)
+    # by default we will assume the alarm will not be triggered
     b = '0'
     # grab the hour and minute from the set alarm time
     h = int(alarm_time[:2])
@@ -77,8 +76,6 @@ def alarm(t, c):
     # now check if it's time to flash the alarm or not, by checking if we have passed the time it is mean$
     if t >= at and t < ft:
         # signal the alarm!
-        # set the brightness to max
-        unicornhat.brightness(1)
         # this will make it flash ON when a second is equal and OFF when it is odd
         if int(t.second % 2) == 0:
             # when converted to binary becomes 0b11, so this will turn ON ALL LEDs

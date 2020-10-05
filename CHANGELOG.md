@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - added settings constants to ```constants.py``` file to these can be referenced more easily
 
+### Changed
+
+- use orange/red for AM/PM (if using 12 hr clock) and white for alarm color
+- don't adjust brightness for alarm, it's bright enough
+
 ## 10/4/2020
 
 ### Added
