@@ -151,17 +151,22 @@ def loop():
 
     draw_time_string(day, 4, 0, 1, day_colour)
 
-    # if not using military time and after 12pm, subtract 12 from hour
+    # if not using military time adjust the time for a 12 hr clock
     current_hour = now.hour
-    if(settings.getValue(constants.MILITARY_TIME) == 'false' and current_hour > 12):
-        current_hour = current_hour - 12
+    hour_color = constants.RED
+    if(settings.getValue(constants.MILITARY_TIME) == 'false'):
+        #either substract 12 if over 12pm or adjust color to designate AM
+        if(current_hour > 12):
+            current_hour = current_hour - 12
+        else:
+            hour_color = constants.ORANGE
 
-    draw_time_string(current_hour, 6, 0, 2, constants.RED)
+    draw_time_string(current_hour, 6, 0, 2, hour_color)
     draw_time_string(now.minute, 6, 0, 3, constants.YELLOW)
     draw_time_string(now.second, 6, 0, 4, constants.GREEN)
 
     # check if the alarm needs to be signalled or not
-    alarm(now, constants.ORANGE)
+    alarm(now, constants.WHITE)
 
     # we've now set all the LEDs, time to show the world our glory!
     unicornhat.show()
