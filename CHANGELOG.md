@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Added
 
 - added settings constants to ```constants.py``` file to these can be referenced more easily
+- added settings.html page as a way to manage advanced settings, only 24 hr clock for now
 
 ### Changed
 

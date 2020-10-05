@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Binary Clock</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.4.3.1.min.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/boostrap.4.3.1.bundle.min.js"></script>
+  <script src="js/custom.js"></script>
+  
+  <!-- webiopi -->
+  <script type="text/javascript" src="/webiopi.js"></script>
+  
+  <script type="text/javascript">
+
+    webiopi().ready(function(){
+      var loadSettings = function(macro,args,response){
+          json = jQuery.parseJSON(response)
+          
+          if(json['military_time'] == 'true')
+          {
+             $('#military_time').prop('checked', true);
+          }
+
+      }
+     
+      webiopi().callMacro('getSettings',[],loadSettings);
+    });
+
+    function saveForm(){
+      webiopi().callMacro('saveValue',['military_time', $('#military_time').prop('checked')],showNotification)
+    }
+
+  </script>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Binary Clock</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="settings.html">Settings <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <main role="main">
+    <p id="alert_area" class="alert alert-success text-center" style="display:none"></div>
+    <div class="container">
+        <div class="row mt-4">
+          <div class="col-lg-12">
+            <h3>Advanced Settings</h3>
+          </div>
+        </div>
+      <div class="row mt-4">
+        <div class="col-md-4 lead">24 Hour Clock</div>
+        <div class="col-md-4">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="military_time">
+            <label class="custom-control-label" for="military_time"></label>
+          </div>
+        </div>
+        <div class="col-md-4">controls if the hour is displayed from 0-23 or 1-12 with different colors for AM/PM</div>
+      </div>
+      <div class="row mt-4 mb-4">
+        <div class="col-lg-12 text-center"><input type="button" class="btn btn-primary" onClick="saveForm()" value="Apply" id="btnSave"/></div>
+      </div>
+    </div>  
+  </main>
+</body>
+
+</html>

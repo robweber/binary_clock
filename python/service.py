@@ -92,6 +92,12 @@ def getTime():
     return json.dumps({'alarm_time':settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': '%d:%d' % (now.hour, now.minute) })
 
 @webiopi.macro
+def getSettings():
+    global settings
+
+    return json.dumps(settings.getAllValues())
+
+@webiopi.macro
 def saveValue(setting_key, setting_value):
     global settings
 
@@ -155,7 +161,7 @@ def loop():
         #either substract 12 if over 12pm or adjust color to designate AM
         if(current_hour > 12):
             current_hour = current_hour - 12
-        else:
+        elif(current_hour < 12):
             hour_color = constants.ORANGE
 
     draw_time_string(current_hour, 6, 0, 2, hour_color)
