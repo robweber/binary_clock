@@ -1,1 +1,1 @@
-{"alarm_time": "07:00", "miltary_time": "true"}
+{"alarm_time": "07:00", "military_time": "true", "color_month": "magenta", "color_day": "blue", "color_hour": "red", "color_hour_am": "orange", "color_minute": "yellow", "color_second": "green", "color_alarm": "white" }

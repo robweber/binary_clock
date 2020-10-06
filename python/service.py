@@ -111,6 +111,26 @@ def saveValue(setting_key, setting_value):
 
     return json.dumps({'message':'Saved!'})
 
+@webiopi.macro
+def saveColors(a,b,c,d,e,f,g):
+    global settings
+
+    # colors are given in order from top row to bottom
+    color_list = [a,b,c,d,e,f,g]
+    setting_list = [constants.COLOR_MONTH, constants.COLOR_DAY, constants.COLOR_HOUR, constants.COLOR_HOUR_AM, constants.COLOR_MINUTE, constants.COLOR_SECOND, constants.COLOR_ALARM]
+
+    # set the display colors in the settings file
+    result = 'Saved!'
+    for i in range(7):
+        if(color_list[i] in constants.COLOR_LIST):
+            settings.setValue(setting_list[i], color_list[i])
+        else:
+            # inform the user but keep going
+            result = 'Invalid color found'
+
+    return json.dumps({'message': result})
+
+
 # SETUP - called when webiopi sets up
 def setup():
     global settings
@@ -137,7 +157,7 @@ def loop():
     now = datetime.datetime.now()
 
     # draw each time string in their specific locations
-    draw_time_string(now.month, 4, 0, 0, constants.MAGENTA)
+    draw_time_string(now.month, 4, 0, 0, constants.COLORS[settings.getValue(constants.COLOR_MONTH)])
 
     # Day field is 4 bits (lights) long, and as we don't use 0-indexed
     # days of the month, that means we can only represent 1-15 (0b1 - 0b1111)
@@ -152,30 +172,30 @@ def loop():
         day = now.day & 0b1111
 
         # Encode the missing bit as colour
-        day_colour = constants.GREEN
+        day_colour = constants.COLORS[settings.getValue(constants.COLOR_DAY)]
     else:
         # Day is 15 or less so the bit representing 16 is not set and the number can be displayed$
         day = now.day
-        day_colour = constants.BLUE
+        day_colour = constants.COLORS[settings.getValue(constants.COLOR_DAY)]
 
     draw_time_string(day, 4, 0, 1, day_colour)
 
     # if not using military time adjust the time for a 12 hr clock
     current_hour = now.hour
-    hour_color = constants.RED
+    hour_color = constants.COLORS[settings.getValue(constants.COLOR_HOUR)]
     if(settings.getValue(constants.MILITARY_TIME) == 'false'):
         #either substract 12 if over 12pm or adjust color to designate AM
         if(current_hour > 12):
             current_hour = current_hour - 12
         elif(current_hour < 12):
-            hour_color = constants.ORANGE
+            hour_color = constants.COLORS[settings.getValue(constants.COLOR_HOUR_AM)]
 
     draw_time_string(current_hour, 6, 0, 3, hour_color)
-    draw_time_string(now.minute, 6, 0, 4, constants.YELLOW)
-    draw_time_string(now.second, 6, 0, 5, constants.GREEN)
+    draw_time_string(now.minute, 6, 0, 4, constants.COLORS[settings.getValue(constants.COLOR_MINUTE)])
+    draw_time_string(now.second, 6, 0, 5, constants.COLORS[settings.getValue(constants.COLOR_SECOND)])
 
     # check if the alarm needs to be signalled or not
-    alarm(now, constants.WHITE)
+    alarm(now, constants.COLORS[settings.getValue(constants.COLOR_ALARM)])
 
     # we've now set all the LEDs, time to show the world our glory!
     unicornhat.show()

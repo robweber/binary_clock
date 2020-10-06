@@ -22,6 +22,7 @@
   <script type="text/javascript" src="/webiopi.js"></script>
   
   <script type="text/javascript">
+    row_names = ['color_month', 'color_day', 'color_hour', 'color_hour_am', 'color_minute', 'color_second', 'color_alarm' ];
 
     webiopi().ready(function(){
       var loadSettings = function(macro,args,response){
@@ -32,13 +33,26 @@
              $('#military_time').prop('checked', true);
           }
 
+          //set the colors
+          row_names.forEach(function(element){
+            $('#' + element).val(json[element]);
+          });
       }
      
       webiopi().callMacro('getSettings',[],loadSettings);
     });
 
     function saveForm(){
-      webiopi().callMacro('saveValue',['military_time', $('#military_time').prop('checked')],showNotification)
+      webiopi().callMacro('saveValue',['military_time', $('#military_time').prop('checked')],showNotification);
+    }
+
+    function saveColors(){
+      // get the color list
+      selected_values = []
+      row_names.forEach(function(element){
+        selected_values.push($('#' + element).val());
+      });
+      webiopi().callMacro('saveColors', selected_values, showNotification);
     }
 
   </script>
@@ -72,6 +86,121 @@
   <!-- Page Content -->
   <main role="main">
     <p id="alert_area" class="alert alert-success text-center" style="display:none"></div>
+    <div class="container">
+        <div class="row mt-4">
+          <div class="col-lg-12">
+            <h3>Display Colors</h3>
+          </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Month Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_month">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Day Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_day">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Hour Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_hour">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">AM Hour Color (if using 12 hr clock)</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_hour_am">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Minute Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_minute">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Second Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_second">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 lead">Alarm Color</div>
+            <div class="col-md-8">
+                <select class="custom-select" id="color_alarm">
+                    <option value="red" selected>Red</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="green">Green</option>
+                    <option value="blue">Blue</option>
+                    <option value="light_blue">Light Blue</option>
+                    <option value="magenta">Magenta</option>
+                    <option value="white">White</option>
+                </select>
+            </div>
+        </div>
+       <div class="row mt-4 mb-4">
+          <div class="col-lg-12 text-center"><input type="button" class="btn btn-primary" onClick="saveColors()" value="Apply" id="btnSave" /></div>
+      </div>
+    </div>
     <div class="container">
         <div class="row mt-4">
           <div class="col-lg-12">
