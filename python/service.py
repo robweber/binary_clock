@@ -81,7 +81,7 @@ def alarm(t, c):
             # when converted to binary becomes 0b11, so this will turn ON ALL LEDs
             b = '255'
     # always update the pixels, the logic above will decide if it displays or not
-    draw_time_string(b, 8, 0, 5, c)
+    #draw_time_string(b, 8, 0, 5, c)
     draw_time_string(b, 8, 0, 6, c)
     draw_time_string(b, 8, 0, 7, c)
 
@@ -170,9 +170,9 @@ def loop():
         elif(current_hour < 12):
             hour_color = constants.ORANGE
 
-    draw_time_string(current_hour, 6, 0, 2, hour_color)
-    draw_time_string(now.minute, 6, 0, 3, constants.YELLOW)
-    draw_time_string(now.second, 6, 0, 4, constants.GREEN)
+    draw_time_string(current_hour, 6, 0, 3, hour_color)
+    draw_time_string(now.minute, 6, 0, 4, constants.YELLOW)
+    draw_time_string(now.second, 6, 0, 5, constants.GREEN)
 
     # check if the alarm needs to be signalled or not
     alarm(now, constants.WHITE)

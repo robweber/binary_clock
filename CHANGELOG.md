@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - use orange/red for AM/PM (if using 12 hr clock) and white for alarm color
 - don't adjust brightness for alarm, it's bright enough
 - show time on index.html as either 24 or 12 hour format depending on setting
+- adjusted spacing with a blank row between the date and time
 
 ## v.0.0.2
 
