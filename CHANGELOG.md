@@ -4,11 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## v0.0.5
+
+### Changed
+
+- made compatible with python3 instead of python2
+
 ## v.0.0.4
 
 ### Added
 
 - added ability to change colors for each row dynamically in the settings area of the web interface
+- add INSTALL document
 
 ### Changed
 

@@ -1,7 +1,14 @@
 # color dict
-COLORS = {'red': (255, 0, 0), 'orange': (255, 127, 0), 'yellow': (255, 255, 0), 'green': (0, 255, 0), 'blue': (0, 127, 255), 'light_blue': (100, 200, 255), 'magenta': (255, 0, 255), 'white': (255, 255, 255)}
+COLORS = {'red': (255, 0, 0),
+          'orange': (255, 127, 0),
+          'yellow': (255, 255, 0),
+          'green': (0, 255, 0),
+          'blue': (0, 127, 255),
+          'light_blue': (100, 200, 255),
+          'magenta': (255, 0, 255),
+          'white': (255, 255, 255)}
 
-#color names
+# color names
 COLOR_LIST = ('red', 'orange', 'yellow', 'green', 'blue', 'light_blue', 'magenta', 'white')
 
 # settings names

@@ -4,25 +4,24 @@ import json
 import unicornhat
 import datetime
 
-"""This script is adapted from the binary_clock.py example found in the Unicorn hat repository: https://github.com/pimoroni/unicorn-hat/blob/master/examples/binary_clock.py"""
-
-#do this to import local modules
+# do this to import local modules
 module_path = '/home/pi/binary_clock/python'
 if module_path not in sys.path:
     sys.path.append(module_path)
 
-#import custom classes
+# import custom classes
 import constants
 from settings import Settings
 
-### START OF GLOBAL VARIABLES
+# START OF GLOBAL VARIABLES
 
-#settings are loaded at startup
+# settings are loaded at startup
 settings = None
 # how many minutes should the alarm flash for
 alarm_flash_time = 1
 # the right most pixel (is set in setup)
 right_most_pixel = 0
+
 
 def draw_time_string(time_string, length, offset, row, colour):
     global right_most_pixel
@@ -56,6 +55,7 @@ def draw_time_string(time_string, length, offset, row, colour):
         # 5 = 0b101 shifted by place becomes 0b010 = 2
         value >>= 1
 
+
 # this function will make use of the remaining space to light up when indicated
 def alarm(t, c):
     global settings
@@ -81,9 +81,9 @@ def alarm(t, c):
             # when converted to binary becomes 0b11, so this will turn ON ALL LEDs
             b = '255'
     # always update the pixels, the logic above will decide if it displays or not
-    #draw_time_string(b, 8, 0, 5, c)
     draw_time_string(b, 8, 0, 6, c)
     draw_time_string(b, 8, 0, 7, c)
+
 
 @webiopi.macro
 def getTime():
@@ -92,10 +92,11 @@ def getTime():
 
     time_string = now.strftime('%H:%M')
     if(settings.getValue(constants.MILITARY_TIME) == 'false'):
-        #if using 12 hour clock, convert
+        # if using 12 hour clock, convert
         time_string = now.strftime('%I:%M %p')
 
-    return json.dumps({'alarm_time':settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': time_string })
+    return json.dumps({'alarm_time': settings.getValue(constants.ALARM_TIME), 'military_time': settings.getValue(constants.MILITARY_TIME), 'current_time': time_string})
+
 
 @webiopi.macro
 def getSettings():
@@ -103,20 +104,22 @@ def getSettings():
 
     return json.dumps(settings.getAllValues())
 
+
 @webiopi.macro
 def saveValue(setting_key, setting_value):
     global settings
 
     settings.setValue(setting_key, setting_value)
 
-    return json.dumps({'message':'Saved!'})
+    return json.dumps({'message': 'Saved!'})
+
 
 @webiopi.macro
-def saveColors(a,b,c,d,e,f,g):
+def saveColors(a, b, c, d, e, f, g):
     global settings
 
     # colors are given in order from top row to bottom
-    color_list = [a,b,c,d,e,f,g]
+    color_list = [a, b, c, d, e, f, g]
     setting_list = [constants.COLOR_MONTH, constants.COLOR_DAY, constants.COLOR_HOUR, constants.COLOR_HOUR_AM, constants.COLOR_MINUTE, constants.COLOR_SECOND, constants.COLOR_ALARM]
 
     # set the display colors in the settings file
@@ -184,7 +187,7 @@ def loop():
     current_hour = now.hour
     hour_color = constants.COLORS[settings.getValue(constants.COLOR_HOUR)]
     if(settings.getValue(constants.MILITARY_TIME) == 'false'):
-        #either substract 12 if over 12pm or adjust color to designate AM
+        # either substract 12 if over 12pm or adjust color to designate AM
         if(current_hour > 12):
             current_hour = current_hour - 12
         elif(current_hour < 12):
@@ -200,4 +203,3 @@ def loop():
     # we've now set all the LEDs, time to show the world our glory!
     unicornhat.show()
     webiopi.sleep(1)
-
