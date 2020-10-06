@@ -10,6 +10,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - added ability to change colors for each row dynamically in the settings area of the web interface
 
+### Changed
+
+- updated README
+- update row description to reflect changes in layout and colors
+
 ## v0.0.3
 
 ### Added
